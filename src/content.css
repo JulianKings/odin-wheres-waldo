@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'Open Sans Italic';
+    src: url('./style/fonts/opensans-italic-variablefont_wdthwght-webfont.woff2') format('woff2'),
+         url('./style/fonts/opensans-italic-variablefont_wdthwght-webfont.woff') format('woff');
+    font-weight: 125 950;
+    font-stretch: 75% 125%;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('./style/fonts/opensans-variablefont_wdthwght-webfont.woff2') format('woff2'),
+         url('./style/fonts/opensans-variablefont_wdthwght-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+  
+body {
+    font-family: 'Open Sans', 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    background-color: #272629;
+}
