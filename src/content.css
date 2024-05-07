@@ -26,4 +26,80 @@ body {
     font-family: 'Open Sans', 'Roboto', sans-serif;
     font-size: 1.1rem;
     background-color: #272629;
+    color: white;
+}
+
+#root {
+    overflow: auto;
+    height: 100%;
+    display: grid;
+    grid: 6rem 1fr 5rem / 1fr;
+    justify-items: center;
+}
+
+.header-container {
+    grid-area: 1 / 1 / 2 / 3;
+    font-size: 3.2rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    margin: 1.6rem 0;
+}
+
+.main-container {
+    grid-area: 2 / 1 / 3 / 3;
+    display: flex;
+    justify-content: center;
+}
+
+.main-container .game-portrait {
+    margin: 0 5%;
+    max-width: 105ch;
+    height: 70vh;
+    position: relative;
+}
+
+.game-portrait .game-selector {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: black;
+    background-color: white;
+    border-radius: 0.4rem;
+    display: none;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+}
+
+.game-selector .game-selector-item {
+    padding: 0.2rem 0.4rem;
+}
+
+.game-selector .game-selector-item:hover {
+    background-color: rgb(39, 38, 41, 0.1);
+}
+
+.game-portrait .background {
+    width: 100%;
+    height: 100%;
+}
+
+.game-portrait .circle {
+    display: block;
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    top: 0;
+    left: 0;
+}
+
+.footer-container {
+    grid-area: 3 / 1 / 4 / 3;
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
