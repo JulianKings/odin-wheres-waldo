@@ -10,9 +10,11 @@ function GameContainer({ selectedStage, updateSelectedStage })
     const selector = useRef(null);
     const gameFinished = useRef(null);
     const gameFinishedCaption = useRef(null);
+    const gameFinishedForm = useRef(null);
     const [selectorStatus, setSelectorStatus] = useState(null);
     const [finishedCharacters, setFinishedCharacters] = useState([]);
     const gameTimer = useRef(null);
+    const gameInput = useRef(null);
     const finishedTimer = useRef(null);
 
     useEffect(() => {
@@ -65,11 +67,11 @@ function GameContainer({ selectedStage, updateSelectedStage })
                     <div className='finished-box-title'>Congratulations!</div>
                     <div ref={gameFinishedCaption} className='finished-box-caption'>You finished this puzzle in xx minutes and xx seconds!</div>
                     <div className='finished-box-save'>If you want to save your score, please input your name here: </div>
-                    <div className='finished-box-form'>
-                        <form method='post' action='#'>
+                    <div ref={gameFinishedForm} className='finished-box-form'>
+                        <form method='post' onSubmit={submitWinner}>
                             <label htmlFor='user-name'>Name: </label>
-                            <input type='text' id='user-name' name='username' placeholder='Your name' maxLength={36} minLength={1} />
-                            <button type='submit'>Save</button>
+                            <input ref={gameInput} type='text' id='user-name' name='username' placeholder='Your name' />
+                            <button type='submit' onClick={(e) => { e.stopPropagation(); }}>Save</button>
                         </form>
                     </div>
                     <div className='finished-try-again'>
@@ -124,7 +126,6 @@ function GameContainer({ selectedStage, updateSelectedStage })
     function onClickMenu(event, type)
     {
         event.stopPropagation();
-        console.log(type);
 
         if(selector.current)
         {
@@ -207,6 +208,55 @@ function GameContainer({ selectedStage, updateSelectedStage })
                     gameFinishedCaption.current.textContent = caption;
                 }
             }
+        }
+    }
+
+    function submitWinner(event)
+    {
+        event.preventDefault();
+        const winner = {};
+        winner.name = gameInput.current.value;
+        winner.time = finishedTimer.current;
+        winner.stage = selectedStage._id;
+
+        if(gameInput.current && gameInput.current.value && gameInput.current.value.length > 0 && finishedTimer.current)
+        {
+            fetch("http://localhost:3000/stage/add_winner", { 
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                mode: "cors",
+                dataType: 'json',
+                body: JSON.stringify(winner),
+            })
+            .then((response) => {
+            if (response.status >= 400) {
+                throw new Error("server error");
+            }
+            return response.json();
+            })
+            .then((response) => {
+                console.log(response);
+                if(response.responseStatus)
+                {
+                    if(response.responseStatus === 'validWinner')
+                    {
+                        gameFinishedForm.current.textContent = 'Leaderboard entry saved successfully';
+                    } else if(response.responseStatus === 'validUpdateWinner')
+                    {
+                        gameFinishedForm.current.textContent = 'Leaderboard entry updated successfully';
+                    } else if(response.responseStatus === "invalidUpdateWinner")
+                    {
+                        gameFinishedForm.current.textContent = 'Your entry is already better!';
+                    } else {
+                        // TODO: notify error
+                    }
+                }            
+            })
+            .catch((error) => {
+                throw new Error(error);
+            });
         }
     }
 
