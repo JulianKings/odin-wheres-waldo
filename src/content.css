@@ -50,6 +50,7 @@ body {
     grid-area: 2 / 1 / 3 / 3;
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 .main-container .game-portrait {
@@ -57,6 +58,29 @@ body {
     max-width: 105ch;
     height: 70vh;
     position: relative;
+}
+
+.main-container .game-hold-portrait {
+    margin: 0 5%;
+    max-width: 105ch;
+    height: 70vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+}
+
+.main-container .stage-selector {
+    margin: 0 5%;
+    max-width: 45ch;
+    height: 70vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.4rem 0.9rem;
+    border: 1px solid white;
 }
 
 .game-portrait .game-selector {
@@ -87,6 +111,64 @@ body {
     height: 100%;
 }
 
+.game-portrait .game-finished {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 6;
+    top: 0; left: 0;
+    background-color: rgb(0, 0, 0, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+
+.game-finished .finished-box
+{
+    max-width: 60%;
+    padding: 0.8rem 1.2rem;
+    background-color: white;
+    color: black;
+    box-shadow: 0 0 0.2rem rgb(0, 0, 0, 0.15);
+    border-radius: 0.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.9rem;
+}
+
+.finished-box .finished-box-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.finished-box input {
+    padding: 0.3rem 0.3rem;
+    margin: 0.2rem 0.2rem;
+    margin-right: 0.5rem;
+    border-radius: 0.4rem;
+    border: 0;
+    background-color: aliceblue;
+}
+
+.finished-box input:focus {
+    outline: none;
+    border: 1px solid rgb(0, 0, 0, 0.2)
+}
+
+.finished-box button {
+    padding: 0.3rem 0.8rem;
+    border-radius: 0.2rem;
+    border: 0;
+    background-color: rgb(43, 43, 43, 0.6);
+    color: white;
+}
+
+.finished-box button:hover {
+    background-color: rgb(43, 43, 43);
+}
+
 .game-portrait .circle {
     display: block;
     position: absolute;
@@ -102,4 +184,23 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
+}
+
+@media (max-width: 950px) {
+    .main-container {
+        flex-direction: column;
+    }
+
+    .main-container .stage-selector {
+        margin: 0 5%;
+        max-width: 90vw;
+        height: 10vh;
+        flex-direction: row;
+        padding: 1rem 0.9rem;
+    }
+
+    .stage-selector-caption {
+        max-width: 9ch;
+    }
+
 }

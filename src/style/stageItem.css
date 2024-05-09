@@ -1,0 +1,16 @@
+.stage-item {
+    margin: 0.2rem 0.6rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.stage-item p {
+    margin: 0.4rem 0.4rem;
+    padding: 0;
+}
+
+.stage-item img {
+    height: 8vh;
+    margin: 0;
+    padding: 0;
+}
