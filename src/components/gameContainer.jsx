@@ -71,11 +71,12 @@ function GameContainer({ selectedStage, updateSelectedStage })
                         <form method='post' onSubmit={submitWinner}>
                             <label htmlFor='user-name'>Name: </label>
                             <input ref={gameInput} type='text' id='user-name' name='username' placeholder='Your name' />
-                            <button type='submit' onClick={(e) => { e.stopPropagation(); }}>Save</button>
+                            <button type='submit' onClick={(event) => { event.stopPropagation(); }}>Save</button>
                         </form>
                     </div>
                     <div className='finished-try-again'>
-                    <button type='button' onClick={() => {
+                    <button type='button' onClick={(event) => {
+                        event.stopPropagation();
                         let clonedStage = { ...selectedStage };
                         if(!clonedStage.attempts)
                         {
@@ -237,7 +238,6 @@ function GameContainer({ selectedStage, updateSelectedStage })
             return response.json();
             })
             .then((response) => {
-                console.log(response);
                 if(response.responseStatus)
                 {
                     if(response.responseStatus === 'validWinner')

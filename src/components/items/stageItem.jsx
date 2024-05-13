@@ -7,7 +7,9 @@ function StageItem({stage, updateSelectedStage})
         <div className='stage-item' onClick={() => {
             updateSelectedStage(stage);
         }}>
-            <p>{stage.name}</p>
+            <div className='stage-caption'>
+                <p>{stage.name}</p>
+            </div>
             <img src={stage.image_url} alt='Stage Image' />            
         </div>
     </>
