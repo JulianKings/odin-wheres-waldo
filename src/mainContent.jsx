@@ -70,7 +70,7 @@ function MainContent () {
             <div className='stage-selector-caption'>Available stages</div>
             {stageContent}
             <div className='stage-add'>
-                <img src={plusCircle} alt='Add Stage' />
+                <a href='./create'><img src={plusCircle} alt='Add Stage' /></a>
             </div>
         </div>
     </main>
