@@ -11,7 +11,7 @@ function MainContent () {
     const [selectedMenu, setSelectedMenu] = useState('game');
 
     useEffect(() => {
-        fetch("http://localhost:3000/stage/all", {                
+        fetch("https://wheres-waldo-king-07ecd83b7b71.herokuapp.com/stage/all", {                
             headers: {
                 'Content-Type': 'application/json'
             },

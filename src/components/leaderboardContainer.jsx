@@ -24,7 +24,7 @@ function LeaderboardContainer({ selectedStage })
 {
     const [stageLeaderboard, setStageLeaderboard] = useState(null);
     useEffect(() => {
-        fetch("http://localhost:3000/stage/leaderboard/" + selectedStage._id, {                
+        fetch("https://wheres-waldo-king-07ecd83b7b71.herokuapp.com/stage/leaderboard/" + selectedStage._id, {                
             headers: {
                 'Content-Type': 'application/json'
             },

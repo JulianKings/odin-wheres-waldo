@@ -331,7 +331,7 @@ function CreateStage () {
                     request.imageUrl = imageInput.current.value;
                     request.characters = characterList;
 
-                    fetch("http://localhost:3000/stage/add_stage", { 
+                    fetch("https://wheres-waldo-king-07ecd83b7b71.herokuapp.com/stage/add_stage", { 
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

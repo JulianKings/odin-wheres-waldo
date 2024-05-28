@@ -1,8 +1,13 @@
-# React + Vite
+# Where's Waldo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Features
 
-Currently, two official plugins are available:
+- Select between several 'stages' to play the classic "Where's Waldo" game on different sceneries
+- Play a stage, select the different characters and get notified when you're right with a green circle surrounding the character.
+- Save your clear time and check in the leaderboard your score
+- Create your own stages with your own characters, selecting where in the map your characters are
+- Said stage creation ask, by default, for the admin of the website to approve the image before that new stage being displayed on the main site.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Preview
+
+You can find a deployed preview [here](https://wheres-waldo-king.netlify.app/)

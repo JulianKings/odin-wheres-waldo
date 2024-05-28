@@ -18,7 +18,7 @@ function GameContainer({ selectedStage, updateSelectedStage })
     const finishedTimer = useRef(null);
 
     useEffect(() => {
-        fetch("http://localhost:3000/stage/children/" + selectedStage._id, {                
+        fetch("https://wheres-waldo-king-07ecd83b7b71.herokuapp.com/stage/children/" + selectedStage._id, {                
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -222,7 +222,7 @@ function GameContainer({ selectedStage, updateSelectedStage })
 
         if(gameInput.current && gameInput.current.value && gameInput.current.value.length > 0 && finishedTimer.current)
         {
-            fetch("http://localhost:3000/stage/add_winner", { 
+            fetch("https://wheres-waldo-king-07ecd83b7b71.herokuapp.com/stage/add_winner", { 
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
