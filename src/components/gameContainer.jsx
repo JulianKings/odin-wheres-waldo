@@ -15,7 +15,6 @@ function GameContainer({ selectedStage, updateSelectedStage })
     const [finishedCharacters, setFinishedCharacters] = useState([]);
     const gameTimer = useRef(null);
     const gameInput = useRef(null);
-    const finishedTimer = useRef(null);
 
     useEffect(() => {
         fetch("https://wheres-waldo-king-07ecd83b7b71.herokuapp.com/stage/children/" + selectedStage._id, {                
@@ -35,13 +34,13 @@ function GameContainer({ selectedStage, updateSelectedStage })
             if(response && response.responseStatus === 'validRequest')
             {
                 setStageChildren(response.stageChildren);
-                gameTimer.current = new Date();
+                gameTimer.current = response.time_id;
             }
         })
         .catch((error) => {
             throw new Error(error);
         })
-    }, []);
+    }, [selectedStage]);
 
     let selectorContent = 'Loading characters...';
 
@@ -168,6 +167,7 @@ function GameContainer({ selectedStage, updateSelectedStage })
 
             let updateFinishedCharacters = [...finishedCharacters];
             updateFinishedCharacters.push(type);
+
             setFinishedCharacters(updateFinishedCharacters);
 
             // Check for game end
@@ -177,36 +177,55 @@ function GameContainer({ selectedStage, updateSelectedStage })
                 if(gameTimer.current && gameFinished.current && gameFinishedCaption.current)
                 {
                     // Show results
-                    const currentTimer = new Date();
-                    const timeDiff = Math.ceil(Math.abs(currentTimer - gameTimer.current) / 1000);
-
-                    gameFinished.current.style.display = 'flex';
-                    let seconds = (timeDiff > 60) ? (timeDiff % 60) : timeDiff;
-                    let minutes = (timeDiff > 60) ? (Math.trunc(timeDiff / 60)) : 0;
-                    let finalMinutes = (minutes > 60) ? (minutes % 60) : minutes;
-                    let hours = (minutes > 60) ? (Math.trunc(minutes / 60)) : 0;
-
-                    let caption = 'You finished this puzzle in ';
-                    if(hours > 0)
-                    {
-                        caption += hours + ' hours, ';
+                    fetch("https://wheres-waldo-king-07ecd83b7b71.herokuapp.com/stage/update_time/" + gameTimer.current, {                
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        mode: "cors",
+                        dataType: 'json',
+                    })
+                    .then((response) => {
+                    if (response.status >= 400) {
+                        throw new Error("server error");
                     }
-                    if(finalMinutes > 0)
-                    {
-                        caption += minutes + ' minutes, ';
-                    }
-                    if(seconds > 0)
-                    {
-                        caption += seconds + ' seconds!';
-                    }
+                    return response.json();
+                    })
+                    .then((response) => {
+                        if(response && response.responseStatus === 'validRequest')
+                        {
+                            let timeDiff = Math.ceil(Math.abs(Date.parse(response.finished_date) - Date.parse(response.started_date)) / 1000);
 
-                    finishedTimer.current = {
-                        hour: hours,
-                        minute: finalMinutes,
-                        second: seconds
-                    }
+                            // small bugfix for server delay
+                            if(timeDiff > 1)
+                            {
+                                timeDiff -= 1;
+                            }
 
-                    gameFinishedCaption.current.textContent = caption;
+                            gameFinished.current.style.display = 'flex';
+                            let seconds = (timeDiff > 60) ? (timeDiff % 60) : timeDiff;
+                            let minutes = (timeDiff > 60) ? (Math.trunc(timeDiff / 60)) : 0;
+                            let finalMinutes = (minutes > 60) ? (minutes % 60) : minutes;
+                            let hours = (minutes > 60) ? (Math.trunc(minutes / 60)) : 0;
+
+                            let caption = 'You finished this puzzle in ';
+                            if(hours > 0)
+                            {
+                                caption += hours + ' hours, ';
+                            }
+                            if(finalMinutes > 0)
+                            {
+                                caption += minutes + ' minutes, ';
+                            }
+                            if(seconds > 0)
+                            {
+                                caption += seconds + ' seconds!';
+                            }
+                            gameFinishedCaption.current.textContent = caption;
+                        }
+                    })
+                    .catch((error) => {
+                        throw new Error(error);
+                    });
                 }
             }
         }
@@ -217,10 +236,10 @@ function GameContainer({ selectedStage, updateSelectedStage })
         event.preventDefault();
         const winner = {};
         winner.name = gameInput.current.value;
-        winner.time = finishedTimer.current;
+        winner.time = gameTimer.current;
         winner.stage = selectedStage._id;
 
-        if(gameInput.current && gameInput.current.value && gameInput.current.value.length > 0 && finishedTimer.current)
+        if(gameInput.current && gameInput.current.value && gameInput.current.value.length > 0 && gameTimer.current)
         {
             fetch("https://wheres-waldo-king-07ecd83b7b71.herokuapp.com/stage/add_winner", { 
                 method: 'POST',
